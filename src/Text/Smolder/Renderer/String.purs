@@ -13,14 +13,15 @@ import Data.CatList (CatList)
 import Data.Char (toCharCode)
 import Data.Foldable (elem, fold, foldr)
 import Data.Map (Map, lookup, fromFoldable)
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (Maybe(..), fromJust, fromMaybe)
 import Data.Set (Set)
 import Data.Set as Set
 import Data.String (length)
 import Data.String.CodeUnits (fromCharArray, toCharArray)
 import Data.Tuple (Tuple(..))
 import Data.Tuple.Nested ((/\))
-import Global.Unsafe (unsafeEncodeURI)
+import JSURI (encodeURIComponent)
+import Partial.Unsafe (unsafePartial)
 import Text.Smolder.Markup (Attr(..), Markup, MarkupM(..), NS(..))
 
 escapeMap :: Map Char String
@@ -138,6 +139,9 @@ escape m = fromStream <<< extend escapeS <<< toStream
         '&' | startsEntity (tail w) -> "&"
             | otherwise             -> "&amp;"
         c                           -> fromMaybe (fromCharArray [c]) $ lookup c m
+
+unsafeEncodeURI :: String -> String
+unsafeEncodeURI str = unsafePartial $ fromJust $ encodeURIComponent str
 
 escapeAttrValue :: String -> String -> String -> String
 escapeAttrValue tag key value

@@ -1,3 +1,7 @@
+## 2022-12-19 - Updated to using spago 0.20.9 & purs 0.15.7
+
+---
+
 ## Low Maintenance Warning
 
 This library is in low maintenance mode, which means the author is currently only responding to pull requests and breaking compiler updates. If you want to take over maintainership of this library, please feel free to open an issue about it.
